@@ -6,7 +6,7 @@ import argparse
 import json
 from typing import Sequence
 
-from .generator import generate_ideas, preview_lines, supported_features
+from .generator import generate_ideas, generate_outlines, outline_lines, preview_lines, supported_features
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -35,6 +35,26 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("text", "json"),
         help="Output format.",
     )
+
+    outline = subparsers.add_parser("outline", help="Generate script outlines.")
+    outline.add_argument(
+        "--feature",
+        default="all",
+        choices=(*supported_features(), "all"),
+        help="Feature area to generate for.",
+    )
+    outline.add_argument(
+        "--count",
+        default=3,
+        type=int,
+        help="Number of outlines to generate.",
+    )
+    outline.add_argument(
+        "--format",
+        default="text",
+        choices=("text", "json"),
+        help="Output format.",
+    )
     return parser
 
 
@@ -52,6 +72,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(json.dumps([idea.to_dict() for idea in ideas], ensure_ascii=False, indent=2))
         else:
             print("\n".join(preview_lines(ideas)))
+        return 0
+
+    if args.command == "outline":
+        try:
+            outlines = generate_outlines(args.feature, args.count)
+        except ValueError as exc:
+            parser.error(str(exc))
+
+        if args.format == "json":
+            print(json.dumps([outline.to_dict() for outline in outlines], ensure_ascii=False, indent=2))
+        else:
+            print("\n".join(outline_lines(outlines)))
         return 0
 
     parser.error("unknown command")

@@ -50,6 +50,18 @@ Generate ideas for all supported features:
 beauty-content-kit generate --feature all --count 9
 ```
 
+Generate reusable script outlines:
+
+```bash
+beauty-content-kit outline --feature lip --count 2
+```
+
+Generate outlines in JSON:
+
+```bash
+beauty-content-kit outline --feature all --count 3 --format json
+```
+
 ## Example output
 
 ```text
@@ -82,7 +94,7 @@ python3 -m compileall src tests
 ## Roadmap
 
 - Add English prompt templates.
-- Add script-outline generation.
+- Improve script-outline generation.
 - Add CSV export for content calendars.
 - Add more safe-language filters.
 - Add examples for local beauty studios.

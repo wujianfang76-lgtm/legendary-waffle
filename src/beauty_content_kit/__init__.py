@@ -1,5 +1,5 @@
 """Beauty Content Kit."""
 
-from .generator import ContentIdea, generate_ideas
+from .generator import ContentIdea, ScriptOutline, generate_ideas, generate_outlines
 
-__all__ = ["ContentIdea", "generate_ideas"]
+__all__ = ["ContentIdea", "ScriptOutline", "generate_ideas", "generate_outlines"]
